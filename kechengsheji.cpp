@@ -125,28 +125,28 @@ void list(struct staff S[])    //浏览职工工资数据函数
 void modify(struct staff S[])
 {
       int i;
-	  float gwgz1,xjgz1,zwjt1,jxgz1,yfgz1,gs1,sfgz1;
+	  int num=0;    //计算工资总和
+	  float gwgz1,xjgz1,zwjt1,jxgz1;
 	  int flag=0;
 	  char gonghao[10];
 	  printf("请输入要修改员工编号:");
 	  scanf("%s",gonghao);
       printf("请依次输入要修改员工工资:");
+      printf("岗位工资:");
       scanf("%f",&gwgz1);
+	  printf("薪级工资:");
 	  scanf("%f",&xjgz1);
+	  printf("职位津贴:");
 	  scanf("%f",&zwjt1);
+      printf("绩效工资:");
 	  scanf("%f",&jxgz1);
-	  scanf("%f",&yfgz1);
-	  scanf("%f",&gs1);
-	  scanf("%f",&sfgz1);
 	  for(i=0;i<n;i++)
 	  {
 		  S[i].gwgz=gwgz1;
 		  S[i].xjgz=xjgz1;
 		  S[i].zwjt=zwjt1;
 		  S[i].jxgz=jxgz1;
-		  S[i].yfgz=yfgz1;
-		  S[i].gs=gs1;
-		  S[i].sfgz=sfgz1;
+		  S[i].yfgz=S[i].gwgz+S[i].xjgz+S[i].zwjt+S[i].jxgz;
 		  flag=1;
 	  }
 	  if(flag==0)
@@ -161,6 +161,47 @@ void modify(struct staff S[])
 		 
 	  }
 }
+void add(struct staff S[])
+{   
+	 
+	  FILE *fp;
+	  if((fp=fopen("gz.dat","w"))==NULL)
+	  {
+		  printf("文件打开失败\n");
+		  exit(-1);
+	  }
+	  if(n>100)
+	  {
+		  printf("员工信息已满!");
+		  exit(-1);
+	  }
+	  else{
+		  
+		   struct staff a;
+		   printf("\n");
+		   printf("请输入员工编号:");
+		   scanf("%s",a.number);
+		   printf("请输入员工姓名:");
+           scanf("%s",a.name);
+		   printf("请输入岗位工资:");
+		   scanf("%f",&a.gwgz);
+		   printf("请输入薪级工资:");
+		   scanf("%f",&a.xjgz);
+		   printf("请输入职位津贴:");
+		   scanf("%f",&a.zwjt);
+		   printf("请输入绩效工资:");
+		   scanf("%f",&a.jxgz);
+		   a.yfgz=a.gwgz+a.xjgz+a.zwjt+a.jxgz;
+		   S[n++]=a;
+		   write(S,n);
+	  }
+	  if(fclose(fp))
+	  {   cout<<n<<endl;
+		  printf("\n文件关闭失败");
+		  exit(-1);
+	  }
+}
+     
 	
 int main()
 {   struct staff zggz[100];
@@ -168,6 +209,7 @@ int main()
     //write(zggz,n);
 	//find(zggz);
 	//list(zggz);
-	modify(zggz);
+	//modify(zggz);
+	add(zggz);
 	return 0;
 }
