@@ -10,37 +10,7 @@ struct staff
   char name[10];
   float gwgz,xjgz,zwjt,jxgz,yfgz,gs,sfgz;
 }zggz[100],*q;
-void grsds()
-{   int i;
-	for(i=0;i<n;i++)
-	{
-	zggz[i].yfgz=zggz[i].gs+zggz[i].jxgz+zggz[i].xjgz+zggz[i].zwjt;
-	if(zggz[i].yfgz<=500)
-		zggz[i].gs=zggz[i].yfgz*0.05;
-	else if(zggz[i].yfgz>500 && zggz[i].yfgz<=2000)
-        zggz[i].gs=zggz[i].yfgz*0.1;
-	else if(zggz[i].yfgz>2000 && zggz[i].yfgz<=5000)
-		zggz[i].gs=zggz[i].yfgz*0.15;
-	else if(zggz[i].yfgz>5000 && zggz[i].yfgz<=20000)
-		zggz[i].gs=zggz[i].yfgz*0.2;
-	else if(zggz[i].yfgz>20000 && zggz[i].yfgz<=40000)
-	    zggz[i].gs=zggz[i].yfgz*0.25;
-	else if(zggz[i].yfgz>40000 && zggz[i].yfgz<=60000)
-		zggz[i].gs=zggz[i].yfgz*0.3;
-	else if(zggz[i].yfgz>60000 && zggz[i].yfgz<=80000)
-        zggz[i].gs=zggz[i].yfgz*0.35;
-	else if(zggz[i].yfgz>80000 && zggz[i].yfgz<=100000)
-		zggz[i].gs=zggz[i].yfgz*0.4;
-	else if(zggz[i].yfgz>100000 )
-        zggz[i].gs=zggz[i].yfgz*0.45;
-	}
 
-    for(i=0;i<n;i++)
-	{
-		zggz[i].gs=zggz[i].yfgz*0.45;
-	    zggz[i].sfgz=zggz[i].yfgz-zggz[i].gs;
-	}
-}
  int read()    //读取职工工资数据
   {
 	FILE *fp;
@@ -79,7 +49,29 @@ void write(struct staff S[],int n)    //保存职工工资数据
 	      fclose(fp);
 	      printf("文件保存成功\n");
   }
-
+int grsds(float yfgz)
+{   
+	float tax;
+	if(yfgz<=500)
+		tax=yfgz*0.05;
+	else if(yfgz>500 && yfgz<=2000)
+        tax=yfgz*0.1;
+	else if(yfgz>2000 && yfgz<=5000)
+		tax=yfgz*0.15;
+	else if(yfgz>5000 && yfgz<=20000)
+		tax=yfgz*0.2;
+	else if(yfgz>20000 && yfgz<=40000)
+	    tax=yfgz*0.25;
+	else if(yfgz>40000 && yfgz<=60000)
+		tax=yfgz*0.3;
+	else if(yfgz>60000 && yfgz<=80000)
+        tax=yfgz*0.35;
+	else if(yfgz>80000 && yfgz<=100000)
+		tax=yfgz*0.4;
+	else if(yfgz>100000 )
+        tax=yfgz*0.45;
+	return tax;
+}	 
 void find(struct staff S[])    //查询职工工资数据函数
   {
 	  int i;
@@ -180,6 +172,8 @@ void add(struct staff S[])
 		   printf("请输入绩效工资:");
 		   scanf("%f",&S[n].jxgz);
 		   S[n].yfgz=S[n].gwgz+S[n].xjgz+S[n].zwjt+S[n].jxgz;
+		   S[n].gs=grsds(S[n].yfgz);
+		   S[n].sfgz=S[n].yfgz-S[n].gs;
            n++;
 		   write(S,n);
 	  }	  
@@ -187,8 +181,8 @@ void add(struct staff S[])
 void del(struct staff S[])
 {
 	char del_number[10];    //存储需要删除员工的编号
-    int flag=0;       //标记有没有该员工
-	int del_count=0;   //记录已删除员工数
+    int flag=0;            //标记有没有该员工
+	int del_count=0;      //记录已删除员工数
 	printf("\n");
 	printf("请输入需要删除员工编号:");
 	scanf("%s",del_number);
