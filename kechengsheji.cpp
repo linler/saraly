@@ -27,7 +27,7 @@ struct staff
         n++;
 	 }
 	 fclose(fp);
-	printf("已读取%d位员工\n",n);
+	//printf("已读取%d位员工\n",n);
 	return n;
  }
 void write(struct staff S[],int n)    //保存职工工资数据
@@ -47,7 +47,7 @@ void write(struct staff S[],int n)    //保存职工工资数据
 		  
 	  }
 	      fclose(fp);
-	      printf("文件保存成功\n");
+	      //printf("文件保存成功\n");
   }
 int grsds(float yfgz)
 {   
@@ -55,21 +55,21 @@ int grsds(float yfgz)
 	if(yfgz<=500)
 		tax=yfgz*0.05;
 	else if(yfgz>500 && yfgz<=2000)
-        tax=yfgz*0.1;
+        tax=(yfgz-500)*0.1+500*0.05;
 	else if(yfgz>2000 && yfgz<=5000)
-		tax=yfgz*0.15;
+		tax=(yfgz-2000)*0.15;
 	else if(yfgz>5000 && yfgz<=20000)
-		tax=yfgz*0.2;
+		tax=(yfgz-5000)*0.2+3000*0.15+1500*0.1+500*0.05;
 	else if(yfgz>20000 && yfgz<=40000)
-	    tax=yfgz*0.25;
+	    tax=(yfgz-20000)*0.25+15000*0.2+3000*0.15+1500*0.1+500*0.05;
 	else if(yfgz>40000 && yfgz<=60000)
-		tax=yfgz*0.3;
+		tax=(yfgz-40000)*0.3+20000*0.25+15000*0.2+3000*0.15+1500*0.1+500*0.05;
 	else if(yfgz>60000 && yfgz<=80000)
-        tax=yfgz*0.35;
+        tax=(yfgz-60000)*0.35+20000*0.3+20000*0.25+15000*0.2+3000*0.15+1500*0.1+500*0.05;
 	else if(yfgz>80000 && yfgz<=100000)
-		tax=yfgz*0.4;
+		tax=(yfgz-80000)*0.4+20000*0.35+20000*0.3+20000*0.25+15000*0.2+3000*0.15+1500*0.1+500*0.05;
 	else if(yfgz>100000 )
-        tax=yfgz*0.45;
+        tax=(yfgz-100000)*0.45+20000*0.4+20000*0.35+20000*0.3+20000*0.25+15000*0.2+3000*0.15+1500*0.1+500*0.05;
 	return tax;
 }	 
 void find(struct staff S[])    //查询职工工资数据函数
@@ -119,7 +119,7 @@ void modify(struct staff S[])
 	  char gonghao[10];
 	  printf("请输入要修改员工编号:");
 	  scanf("%s",gonghao);
-      printf("请依次输入要修改员工工资:");
+      printf("请依次输入要修改员工工资:\n");
       printf("岗位工资:");
       scanf("%f",&gwgz1);
 	  printf("薪级工资:");
@@ -135,7 +135,9 @@ void modify(struct staff S[])
 		  S[i].zwjt=zwjt1;
 		  S[i].jxgz=jxgz1;
 		  S[i].yfgz=S[i].gwgz+S[i].xjgz+S[i].zwjt+S[i].jxgz;
-
+		  S[i].gs=grsds(S[i].yfgz);
+		  S[i].sfgz=S[i].yfgz-S[i].gs;
+		   write(S,n);
 		  flag=1;
 	  }
 	  if(flag==0)
@@ -209,16 +211,16 @@ void list(struct staff S[])    //浏览职工工资数据函数
 { 
 	int i;
 	for(i=0;i<n;i++)
-	{     printf("编号     姓名     岗位工资     薪级工资     职务津贴     绩效工资     应发工资     个人所得税     实发工资\n");
+	{     printf("编号    姓名     岗位工资     薪级工资    职务津贴     绩效工资       应发工资     个人所得税         实发工资\n");
 		  printf("%s\t",S[i].number);    
-		  printf("%s\t",S[i].name);	  
-		  printf("%.2f\t",S[i].gwgz);	  
-		  printf("%.2f\t",S[i].xjgz);		  
-		  printf("%.2f\t",S[i].zwjt);		  
+		  printf("%s\t   ",S[i].name);	  
+		  printf("%.2f\t ",S[i].gwgz);	  
+		  printf("%.2f\t   ",S[i].xjgz);		  
+		  printf("%.2f\t  ",S[i].zwjt);		  
 		  printf("%.2f\t",S[i].jxgz);		 
-		  printf("%.2f\t",S[i].yfgz);		  
-		  printf("%.2f\t",S[i].gs);
-		  printf("%.2f\n",S[i].sfgz);
+		  printf("%.2f\t        ",S[i].yfgz);		  
+		  printf("%.2f\t        ",S[i].gs);
+		  printf("%.2f\n   ",S[i].sfgz);
 		  puts("********************************************************************************");
 	}
 
