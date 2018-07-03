@@ -89,16 +89,16 @@ void find(struct staff S[])    //查询职工工资数据函数
 	  }
 	  if(flag)
 	  {
-		  printf("编号\t姓名\t岗位工资\t薪级工资\t职务津贴\t绩效工资\t应发工资\t个人所得税\t实发工资\n");
-		  printf("%s\t",S[i].number);
-		  printf("%s\t",S[i].name);
-		  printf("%f\t",S[i].gwgz);
-		  printf("%f\t",S[i].xjgz);
-		  printf("%f\t",S[i].zwjt);
-		  printf("%f\t",S[i].jxgz);
-		  printf("%f\t",S[i].yfgz);
-		  printf("%f\t",S[i].gs);
-		  printf("%f\t",S[i].sfgz);
+		  printf("编号      姓名     岗位工资     薪级工资     职务津贴     绩效工资     应发工资     个人所得税     实发工资\n");
+		  printf("%s\t ",S[i].number);
+		  printf("%s\t ",S[i].name);
+		  printf("%.2f\t ",S[i].gwgz);
+		  printf("%.2f\t ",S[i].xjgz);
+		  printf("%.2f\t ",S[i].zwjt);
+		  printf("%.2f\t ",S[i].jxgz);
+		  printf("%.2f\t ",S[i].yfgz);
+		  printf("%.2f\t",S[i].gs);
+		  printf("%.2f\n",S[i].sfgz);
 	  }
 	  else
 	  {
@@ -213,14 +213,14 @@ void list(struct staff S[])    //浏览职工工资数据函数
 	for(i=0;i<n;i++)
 	{     printf("编号    姓名     岗位工资     薪级工资    职务津贴     绩效工资       应发工资     个人所得税         实发工资\n");
 		  printf("%s\t",S[i].number);    
-		  printf("%s\t   ",S[i].name);	  
-		  printf("%.2f\t ",S[i].gwgz);	  
-		  printf("%.2f\t   ",S[i].xjgz);		  
+		  printf("%s\t",S[i].name);	  
+		  printf("%.2f\t    ",S[i].gwgz);	  
+		  printf("%.2f\t  ",S[i].xjgz);		  
 		  printf("%.2f\t  ",S[i].zwjt);		  
-		  printf("%.2f\t",S[i].jxgz);		 
-		  printf("%.2f\t        ",S[i].yfgz);		  
-		  printf("%.2f\t        ",S[i].gs);
-		  printf("%.2f\n   ",S[i].sfgz);
+		  printf("%.2f\t  ",S[i].jxgz);		 
+		  printf("%.2f\t  ",S[i].yfgz);		  
+		  printf("%.2f\t  ",S[i].gs);
+		  printf("%.2f\n  ",S[i].sfgz);
 		  puts("********************************************************************************");
 	}
 
