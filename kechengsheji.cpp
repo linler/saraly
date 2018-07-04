@@ -1,18 +1,29 @@
+/************************************************************
+Copyright (C), 2018, GXUN, Ltd.
+ FileName: kechengsheji.cpp
+ Author: Version : Date:
+ Description: // 分别有文件读写、数据的增删改查八个模块
+ Version: // 版本信息
+ Function List: // 数据的增删改查函数、文件的读写函数以及一个main函数
+ 1. -------
+ History: // 历史修改记录
+ <author> <time> <version > <desc>
+ David 18/07/05 1.0 build this moudle
+***********************************************************/ 
 #include<stdio.h>
 #include<string.h>
 #include<conio.h>
 #include<iostream>
-using namespace std;
 int n=0;    //全局变量，记录职工数量
 struct staff
 {
   char number[10];
   char name[10];
-  float gwgz,xjgz,zwjt,jxgz,yfgz,gs,sfgz;
+  float gwgz,xjgz,zwjt,jxgz,yfgz,gs,sfgz;  //定义岗位工资、薪级工资、职位津贴、绩效工资、应发工资、个人所得税、实发工资
 }zggz[100],*q;
 
  int read()    //读取职工工资数据
-  {
+ {
 	FILE *fp;
 	q=zggz;
 	if((fp=fopen("gz.dat","rb"))==NULL)
@@ -21,15 +32,16 @@ struct staff
 		getch();
 		exit(-1);
 	}
-	 for(;fread(q,sizeof(struct staff),1,fp);)
-	 {
+	for(;fread(q,sizeof(struct staff),1,fp);)
+	{
         q++;
         n++;
-	 }
+	}
 	 fclose(fp);
 	//printf("已读取%d位员工\n",n);
 	return n;
  }
+
 void write(struct staff S[],int n)    //保存职工工资数据
 {     
 	  int i;
@@ -49,7 +61,7 @@ void write(struct staff S[],int n)    //保存职工工资数据
 	      fclose(fp);
 	      //printf("文件保存成功\n");
   }
-int grsds(float yfgz)
+int grsds(float yfgz)    //计算个人所得税函数
 {   
 	float tax;
 	if(yfgz<=500)
@@ -105,10 +117,7 @@ void find(struct staff S[])    //查询职工工资数据函数
 		  printf("没有找到该编号员工!\n");
 	  }
 	  printf("\n");
-	  system("pause");
   }
-
-
 
 void modify(struct staff S[])
 {
@@ -137,7 +146,7 @@ void modify(struct staff S[])
 		  S[i].yfgz=S[i].gwgz+S[i].xjgz+S[i].zwjt+S[i].jxgz;
 		  S[i].gs=grsds(S[i].yfgz);
 		  S[i].sfgz=S[i].yfgz-S[i].gs;
-		   write(S,n);
+		  write(S,n);    //调用write函数
 		  flag=1;
 	  }
 	  if(flag==0)
@@ -188,8 +197,6 @@ void del(struct staff S[])
 	printf("\n");
 	printf("请输入需要删除员工编号:");
 	scanf("%s",del_number);
-	
-	
 		  for(int i=0;i<n;i++){
 			if(strcmp(S[i].number,del_number)==0){    //找到需要删除的员工编号
 				flag=1;
@@ -205,7 +212,7 @@ void del(struct staff S[])
 	if(flag==1){
 		printf("该员工信息已删除");
 	}
-	write(S,n);
+	write(S,n);    //调用write函数
 }
 void list(struct staff S[])    //浏览职工工资数据函数
 { 
@@ -227,7 +234,7 @@ void list(struct staff S[])    //浏览职工工资数据函数
 }
 int main()
 {   int choose;
-	n=read();
+	read();
 	puts("\n");
 	    puts("       ###  欢迎使用广西民族大学软件与信息安全学院职工工资管理系统  ###    ");
 	puts("\n");
@@ -274,4 +281,3 @@ int main()
 	}while(choose != -1 );
 		return 0;
 }
-
